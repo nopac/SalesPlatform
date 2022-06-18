@@ -1,0 +1,85 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>hello</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--&lt;!&ndash;将controller中的id属性显示&ndash;&gt;-->
+<!--<h4>标准变量表达式${}</h4>-->
+<!--<h1 th:text="${name}">显示内容</h1>-->
+<!--&lt;!&ndash;通过对象属性值，获取内容&ndash;&gt;-->
+<!--<h2 th:text="${customer.customerName}">scacs</h2>-->
+<!--<h2 th:text="${customer.customerId}">scacs</h2>-->
+<!--<h2 th:text="${customer.customerSex}">scacs</h2>-->
+
+<!--<h4>选择变量表达式:*{}</h4>-->
+<!--<div th:object="${customer}">-->
+<!--    用户名<span th:text="*{customerId}"></span>-->
+<!--    用户名<span th:text="*{customerName}"></span>-->
+<!--</div>-->
+
+<!--&lt;!&ndash;前两个的混合使用&ndash;&gt;-->
+
+<!--<h4>url路径表达式,用于表达相对路径</h4>-->
+<!--<a th:href="@{http://www.baidu.com}">跳转</a>-->
+
+<!--<h4>相对路径带参数</h4>-->
+<!--<a th:href="@{/test?id='dsa'&name='sca'}">带参数</a>-->
+<!--<a th:href="@{'/test?id='+${customer.customerName}+'name='+${customer.customerId}}">获取后台参数</a>-->
+<!--<a th:href="@{/test(id=${customer.customerId}, name=${customer.customerName})}">获取后台参数</a>-->
+<!--&lt;!&ndash;自动从static路径下寻找&ndash;&gt;-->
+<!--<img th:src="@{/img/aa.png}">-->
+
+<!--<form method="post" th:action="@{}">-->
+<!--    <input th:id="id" th:name="name"/>-->
+<!--</form>-->
+
+<!--&lt;!&ndash;<!-循环遍历&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;user:循环对象名称，随意  userStat循环状态变量(可不写)  userList当前循环的集合&ndash;&gt;-->
+<!--&lt;!&ndash;也可嵌套使用遍历复杂集合&ndash;&gt;-->
+<!--<div th:each="user, userStat:${userList}">-->
+<!--    <span th:text="${user.id}"></span>-->
+<!--    <span th:text="${user.name}"></span>-->
+<!--    <span th:text="${user.phone}"></span>-->
+<!--</div>unless-->
+
+<!--&lt;!&ndash;条件判断&ndash;&gt;-->
+<!--<div th:if="${sex == 1}">男</div>-->
+<!--<div th:if="${sex == 0}">女</div>-->
+<!--&lt;!&ndash;条件判断取反&ndash;&gt;-->
+<!--<div th:unless="${sex == 0}">女</div>-->
+<!--&lt;!&ndash;switch/case&ndash;&gt;-->
+<!--<h4 th:switch="${num}">-->
+<!--    <span th:case="1">1</span>-->
+<!--    <span th:case="2">2</span>-->
+<!--    <span th:case="*">null</span>-->
+<!--</h4>-->
+
+<!--&lt;!&ndash;内敛表达式&ndash;&gt;-->
+<!--<div th:inline="text">-->
+<!--    数据：[[${data}]]-->
+<!--</div>-->
+<!--<script th:inline="javascript">-->
+<!--    function showData() {-->
+<!--        alert([[${data}]]);-->
+<!--    }-->
+<!--</script>-->
+
+
+<!--&lt;!&ndash;字符串拼接&ndash;&gt;-->
+<!--<span th:text="'共'+${num}+'页'"></span>-->
+<!--<span th:text=|共${num}页，总共${num}|></span>-->
+
+
+<!--&lt;!&ndash;三目表达式&ndash;&gt;-->
+<!--<div th:text="${sex} == 1 ? 'nan' : 'nv'"></div>-->
+
+
+<!--&lt;!&ndash;获取session&ndash;&gt;-->
+<!--<span th:text="${#session.getAttribute("userName")}"></span>-->
+<!--<span th:text="${#httpsession.getAttribute("userName")}"></span>-->
+<!--<span th:text="${session.username}"></span>-->
+
+<!--</body>-->
+<!--</html>-->

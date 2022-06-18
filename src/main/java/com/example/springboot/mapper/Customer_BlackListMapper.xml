@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.Customer_BlackListMapper">
+  <resultMap id="BaseResultMap" type="com.example.springboot.model.Customer_BlackList">
+    <id column="blacklist_id" jdbcType="INTEGER" property="blacklistId" />
+    <result column="blacklist_from" jdbcType="VARCHAR" property="blacklistFrom" />
+    <result column="blacklist_to" jdbcType="VARCHAR" property="blacklistTo" />
+    <result column="blacklist_type" jdbcType="VARCHAR" property="blacklistType" />
+    <result column="blacklist_start_date" jdbcType="TIMESTAMP" property="blacklistStartDate" />
+    <result column="blacklist_end_date" jdbcType="TIMESTAMP" property="blacklistEndDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    blacklist_id, blacklist_from, blacklist_to, blacklist_type, blacklist_start_date, 
+    blacklist_end_date
+  </sql>
+  <select id="selectByExample" parameterType="com.example.springboot.model.Customer_BlackListExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from customer_blacklist
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from customer_blacklist
+    where blacklist_id = #{blacklistId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByFromTo" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from customer_blacklist
+    where blacklist_from = #{blacklistFrom,jdbcType=VARCHAR}
+    and blacklist_to = #{blacklistTo,jdbcType=VARCHAR}
+  </select>
+  <select id="selectMyList" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from customer_blacklist
+    where blacklist_from = #{blacklistFrom,jdbcType=VARCHAR} limit #{currPage,jdbcType=INTEGER} , #{pageSize,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from customer_blacklist limit #{currPage,jdbcType=INTEGER} , #{pageSize,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from customer_blacklist
+    where blacklist_id = #{blacklistId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.model.Customer_BlackListExample">
+    delete from customer_blacklist
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.model.Customer_BlackList">
+    insert into customer_blacklist (blacklist_id, blacklist_from, blacklist_to, 
+      blacklist_type, blacklist_start_date, blacklist_end_date
+      )
+    values (#{blacklistId,jdbcType=INTEGER}, #{blacklistFrom,jdbcType=VARCHAR}, #{blacklistTo,jdbcType=VARCHAR}, 
+      #{blacklistType,jdbcType=VARCHAR}, #{blacklistStartDate,jdbcType=TIMESTAMP}, #{blacklistEndDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.model.Customer_BlackList">
+    insert into customer_blacklist
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="blacklistId != null">
+        blacklist_id,
+      </if>
+      <if test="blacklistFrom != null">
+        blacklist_from,
+      </if>
+      <if test="blacklistTo != null">
+        blacklist_to,
+      </if>
+      <if test="blacklistType != null">
+        blacklist_type,
+      </if>
+      <if test="blacklistStartDate != null">
+        blacklist_start_date,
+      </if>
+      <if test="blacklistEndDate != null">
+        blacklist_end_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="blacklistId != null">
+        #{blacklistId,jdbcType=INTEGER},
+      </if>
+      <if test="blacklistFrom != null">
+        #{blacklistFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="blacklistTo != null">
+        #{blacklistTo,jdbcType=VARCHAR},
+      </if>
+      <if test="blacklistType != null">
+        #{blacklistType,jdbcType=VARCHAR},
+      </if>
+      <if test="blacklistStartDate != null">
+        #{blacklistStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blacklistEndDate != null">
+        #{blacklistEndDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.model.Customer_BlackListExample" resultType="java.lang.Long">
+    select count(*) from customer_blacklist
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="countByMerchantAccount" parameterType="java.lang.String" resultType="java.lang.Long">
+    select count(*) from customer_blacklist
+    where blacklist_from = #{merchantAccount.jdbcType=VARCHAR}
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update customer_blacklist
+    <set>
+      <if test="record.blacklistId != null">
+        blacklist_id = #{record.blacklistId,jdbcType=INTEGER},
+      </if>
+      <if test="record.blacklistFrom != null">
+        blacklist_from = #{record.blacklistFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.blacklistTo != null">
+        blacklist_to = #{record.blacklistTo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.blacklistType != null">
+        blacklist_type = #{record.blacklistType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.blacklistStartDate != null">
+        blacklist_start_date = #{record.blacklistStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.blacklistEndDate != null">
+        blacklist_end_date = #{record.blacklistEndDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update customer_blacklist
+    set blacklist_id = #{record.blacklistId,jdbcType=INTEGER},
+      blacklist_from = #{record.blacklistFrom,jdbcType=VARCHAR},
+      blacklist_to = #{record.blacklistTo,jdbcType=VARCHAR},
+      blacklist_type = #{record.blacklistType,jdbcType=VARCHAR},
+      blacklist_start_date = #{record.blacklistStartDate,jdbcType=TIMESTAMP},
+      blacklist_end_date = #{record.blacklistEndDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.model.Customer_BlackList">
+    update customer_blacklist
+    <set>
+      <if test="blacklistFrom != null">
+        blacklist_from = #{blacklistFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="blacklistTo != null">
+        blacklist_to = #{blacklistTo,jdbcType=VARCHAR},
+      </if>
+      <if test="blacklistType != null">
+        blacklist_type = #{blacklistType,jdbcType=VARCHAR},
+      </if>
+      <if test="blacklistStartDate != null">
+        blacklist_start_date = #{blacklistStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blacklistEndDate != null">
+        blacklist_end_date = #{blacklistEndDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where blacklist_id = #{blacklistId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.model.Customer_BlackList">
+    update customer_blacklist
+    set blacklist_from = #{blacklistFrom,jdbcType=VARCHAR},
+      blacklist_to = #{blacklistTo,jdbcType=VARCHAR},
+      blacklist_type = #{blacklistType,jdbcType=VARCHAR},
+      blacklist_start_date = #{blacklistStartDate,jdbcType=TIMESTAMP},
+      blacklist_end_date = #{blacklistEndDate,jdbcType=TIMESTAMP}
+    where blacklist_id = #{blacklistId,jdbcType=INTEGER}
+  </update>
+</mapper>

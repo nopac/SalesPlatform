@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>普通用户注册</title>
+    <script th:inline="javascript">
+        function merchant_register() {
+            window.location.href("/merchant_register");
+        }
+    </script>
+</head>
+<body>
+<form method="post" action="/customer_register">
+    账号：<input id="account" name="account"><br>
+    用户名：<input id="userName" name="userName"><br>
+    密码：<input id="password" name="password"><br>
+    <button type="submit">提交</button>
+    <button type="button">清除</button>
+    <button type="button">返回</button>
+    <button type="button" onclick="merchant_register()">商家注册</button>
+</form>
+
+</body>
+</html>

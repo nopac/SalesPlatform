@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.Sales_RecordMapper">
+  <resultMap id="BaseResultMap" type="com.example.springboot.model.Sales_Record">
+    <id column="sale_record_id" jdbcType="INTEGER" property="saleRecordId" />
+    <result column="sales_order" jdbcType="INTEGER" property="salesOrder" />
+    <result column="sales_record_merchant" jdbcType="VARCHAR" property="salesRecordMerchant" />
+    <result column="sales_record_product" jdbcType="INTEGER" property="salesRecordProduct" />
+    <result column="sales_record_customer" jdbcType="VARCHAR" property="salesRecordCustomer" />
+    <result column="sales_record_sale_count" jdbcType="INTEGER" property="salesRecordSaleCount" />
+    <result column="sales_record_money_amount" jdbcType="DOUBLE" property="salesRecordMoneyAmount" />
+    <result column="sales_record_service_charge" jdbcType="DOUBLE" property="salesRecordServiceCharge" />
+    <result column="sales_record_start_date" jdbcType="TIMESTAMP" property="salesRecordStartDate" />
+    <result column="sales_record_pay_date" jdbcType="TIMESTAMP" property="salesRecordPayDate" />
+    <result column="sales_record_receive_date" jdbcType="TIMESTAMP" property="salesRecordReceiveDate" />
+    <result column="sales_record_confirm_date" jdbcType="TIMESTAMP" property="salesRecordConfirmDate" />
+    <result column="sales_rating_by_merchant" jdbcType="DOUBLE" property="salesRatingByMerchant" />
+    <result column="sales_rating_by_customer" jdbcType="DOUBLE" property="salesRatingByCustomer" />
+    <result column="sales_record_is_return" jdbcType="VARCHAR" property="salesRecordIsReturn" />
+    <result column="serve_attitude" jdbcType="DOUBLE" property="serveAttitude" />
+    <result column="response_speed" jdbcType="DOUBLE" property="responseSpeed" />
+    <result column="as_description" jdbcType="DOUBLE" property="asDescription" />
+    <result column="comment_date" jdbcType="TIMESTAMP" property="commentDate" />
+    <result column="comment_text_info" jdbcType="VARCHAR" property="commentTextInfo" />
+    <result column="comment_pic_info" jdbcType="VARCHAR" property="commentPicInfo" />
+    <result column="comment_addtext_info" jdbcType="VARCHAR" property="commentAddtextInfo" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    sale_record_id, sales_order, sales_record_merchant, sales_record_product, sales_record_customer, 
+    sales_record_sale_count, sales_record_money_amount, sales_record_service_charge, 
+    sales_record_start_date, sales_record_pay_date, sales_record_receive_date, sales_record_confirm_date, 
+    sales_rating_by_merchant, sales_rating_by_customer, sales_record_is_return, serve_attitude, 
+    response_speed, as_description, comment_date, comment_text_info, comment_pic_info, 
+    comment_addtext_info
+  </sql>
+  <select id="selectByExample" parameterType="com.example.springboot.model.Sales_RecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sales_records
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByMerchantAccount" parameterType="com.example.springboot.model.Sales_RecordKey" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sales_records
+    where sales_record_merchant = #{salesRecordMerchant,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByProductId" parameterType="com.example.springboot.model.Sales_RecordKey" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sales_records
+    where sales_record_product = #{salesRecordProduct,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCustomerAccount" parameterType="com.example.springboot.model.Sales_RecordKey" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sales_records
+    where sales_record_customer = #{salesRecordCustomer,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByOrderId" parameterType="com.example.springboot.model.Sales_RecordKey" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sales_records
+    where sales_order = #{salesOrder,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sales_records
+    where sale_record_id = #{saleRecordId,jdbcType=INTEGER}
+  </select>
+  <select id="selectComment" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sales_records
+    where sales_record_merchant = #{merchantAccount,jdbcType=VARCHAR} limit #{currPage,jdbcType=INTEGER} , #{pageSize,jdbcType=INTEGER}
+  </select>
+  <select id="selectCommentByProductId" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sales_records
+    where sales_record_product = #{productId,jdbcType=INTEGER}
+    and comment_date != '(null)' limit #{currPage,jdbcType=INTEGER} , #{pageSize,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from sales_records
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sales_records
+    where sale_record_id = #{saleRecordId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.model.Sales_RecordExample">
+    delete from sales_records
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.model.Sales_Record">
+    insert into sales_records (sale_record_id, sales_order, sales_record_merchant, 
+      sales_record_product, sales_record_customer, 
+      sales_record_sale_count, sales_record_money_amount, 
+      sales_record_service_charge, sales_record_start_date, 
+      sales_record_pay_date, sales_record_receive_date, 
+      sales_record_confirm_date, sales_rating_by_merchant, 
+      sales_rating_by_customer, sales_record_is_return, 
+      serve_attitude, response_speed, as_description, 
+      comment_date, comment_text_info, comment_pic_info, 
+      comment_addtext_info)
+    values (#{saleRecordId,jdbcType=INTEGER}, #{salesOrder,jdbcType=INTEGER}, #{salesRecordMerchant,jdbcType=VARCHAR}, 
+      #{salesRecordProduct,jdbcType=INTEGER}, #{salesRecordCustomer,jdbcType=VARCHAR}, 
+      #{salesRecordSaleCount,jdbcType=INTEGER}, #{salesRecordMoneyAmount,jdbcType=DOUBLE}, 
+      #{salesRecordServiceCharge,jdbcType=DOUBLE}, #{salesRecordStartDate,jdbcType=TIMESTAMP}, 
+      #{salesRecordPayDate,jdbcType=TIMESTAMP}, #{salesRecordReceiveDate,jdbcType=TIMESTAMP}, 
+      #{salesRecordConfirmDate,jdbcType=TIMESTAMP}, #{salesRatingByMerchant,jdbcType=DOUBLE}, 
+      #{salesRatingByCustomer,jdbcType=DOUBLE}, #{salesRecordIsReturn,jdbcType=VARCHAR}, 
+      #{serveAttitude,jdbcType=DOUBLE}, #{responseSpeed,jdbcType=DOUBLE}, #{asDescription,jdbcType=DOUBLE}, 
+      #{commentDate,jdbcType=TIMESTAMP}, #{commentTextInfo,jdbcType=VARCHAR}, #{commentPicInfo,jdbcType=VARCHAR}, 
+      #{commentAddtextInfo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.model.Sales_Record">
+    insert into sales_records
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="saleRecordId != null">
+        sale_record_id,
+      </if>
+      <if test="salesOrder != null">
+        sales_order,
+      </if>
+      <if test="salesRecordMerchant != null">
+        sales_record_merchant,
+      </if>
+      <if test="salesRecordProduct != null">
+        sales_record_product,
+      </if>
+      <if test="salesRecordCustomer != null">
+        sales_record_customer,
+      </if>
+      <if test="salesRecordSaleCount != null">
+        sales_record_sale_count,
+      </if>
+      <if test="salesRecordMoneyAmount != null">
+        sales_record_money_amount,
+      </if>
+      <if test="salesRecordServiceCharge != null">
+        sales_record_service_charge,
+      </if>
+      <if test="salesRecordStartDate != null">
+        sales_record_start_date,
+      </if>
+      <if test="salesRecordPayDate != null">
+        sales_record_pay_date,
+      </if>
+      <if test="salesRecordReceiveDate != null">
+        sales_record_receive_date,
+      </if>
+      <if test="salesRecordConfirmDate != null">
+        sales_record_confirm_date,
+      </if>
+      <if test="salesRatingByMerchant != null">
+        sales_rating_by_merchant,
+      </if>
+      <if test="salesRatingByCustomer != null">
+        sales_rating_by_customer,
+      </if>
+      <if test="salesRecordIsReturn != null">
+        sales_record_is_return,
+      </if>
+      <if test="serveAttitude != null">
+        serve_attitude,
+      </if>
+      <if test="responseSpeed != null">
+        response_speed,
+      </if>
+      <if test="asDescription != null">
+        as_description,
+      </if>
+      <if test="commentDate != null">
+        comment_date,
+      </if>
+      <if test="commentTextInfo != null">
+        comment_text_info,
+      </if>
+      <if test="commentPicInfo != null">
+        comment_pic_info,
+      </if>
+      <if test="commentAddtextInfo != null">
+        comment_addtext_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="saleRecordId != null">
+        #{saleRecordId,jdbcType=INTEGER},
+      </if>
+      <if test="salesOrder != null">
+        #{salesOrder,jdbcType=INTEGER},
+      </if>
+      <if test="salesRecordMerchant != null">
+        #{salesRecordMerchant,jdbcType=VARCHAR},
+      </if>
+      <if test="salesRecordProduct != null">
+        #{salesRecordProduct,jdbcType=INTEGER},
+      </if>
+      <if test="salesRecordCustomer != null">
+        #{salesRecordCustomer,jdbcType=VARCHAR},
+      </if>
+      <if test="salesRecordSaleCount != null">
+        #{salesRecordSaleCount,jdbcType=INTEGER},
+      </if>
+      <if test="salesRecordMoneyAmount != null">
+        #{salesRecordMoneyAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="salesRecordServiceCharge != null">
+        #{salesRecordServiceCharge,jdbcType=DOUBLE},
+      </if>
+      <if test="salesRecordStartDate != null">
+        #{salesRecordStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesRecordPayDate != null">
+        #{salesRecordPayDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesRecordReceiveDate != null">
+        #{salesRecordReceiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesRecordConfirmDate != null">
+        #{salesRecordConfirmDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesRatingByMerchant != null">
+        #{salesRatingByMerchant,jdbcType=DOUBLE},
+      </if>
+      <if test="salesRatingByCustomer != null">
+        #{salesRatingByCustomer,jdbcType=DOUBLE},
+      </if>
+      <if test="salesRecordIsReturn != null">
+        #{salesRecordIsReturn,jdbcType=VARCHAR},
+      </if>
+      <if test="serveAttitude != null">
+        #{serveAttitude,jdbcType=DOUBLE},
+      </if>
+      <if test="responseSpeed != null">
+        #{responseSpeed,jdbcType=DOUBLE},
+      </if>
+      <if test="asDescription != null">
+        #{asDescription,jdbcType=DOUBLE},
+      </if>
+      <if test="commentDate != null">
+        #{commentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentTextInfo != null">
+        #{commentTextInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="commentPicInfo != null">
+        #{commentPicInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="commentAddtextInfo != null">
+        #{commentAddtextInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.model.Sales_RecordExample" resultType="java.lang.Long">
+    select count(*) from sales_records
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="countByMerchantAccount" parameterType="java.lang.String" resultType="java.lang.Long">
+    select count(*) from sales_records
+    where sales_record_merchant = #{merchantAccount,jdbcType=VARCHAR}
+  </select>
+  <select id="countByProductId" parameterType="java.lang.Integer" resultType="java.lang.Long">
+    select count(*) from sales_records
+    where sales_record_product = #{productId,jdbcType=INTEGER}
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sales_records
+    <set>
+      <if test="record.saleRecordId != null">
+        sale_record_id = #{record.saleRecordId,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesOrder != null">
+        sales_order = #{record.salesOrder,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesRecordMerchant != null">
+        sales_record_merchant = #{record.salesRecordMerchant,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesRecordProduct != null">
+        sales_record_product = #{record.salesRecordProduct,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesRecordCustomer != null">
+        sales_record_customer = #{record.salesRecordCustomer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesRecordSaleCount != null">
+        sales_record_sale_count = #{record.salesRecordSaleCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesRecordMoneyAmount != null">
+        sales_record_money_amount = #{record.salesRecordMoneyAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.salesRecordServiceCharge != null">
+        sales_record_service_charge = #{record.salesRecordServiceCharge,jdbcType=DOUBLE},
+      </if>
+      <if test="record.salesRecordStartDate != null">
+        sales_record_start_date = #{record.salesRecordStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.salesRecordPayDate != null">
+        sales_record_pay_date = #{record.salesRecordPayDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.salesRecordReceiveDate != null">
+        sales_record_receive_date = #{record.salesRecordReceiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.salesRecordConfirmDate != null">
+        sales_record_confirm_date = #{record.salesRecordConfirmDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.salesRatingByMerchant != null">
+        sales_rating_by_merchant = #{record.salesRatingByMerchant,jdbcType=DOUBLE},
+      </if>
+      <if test="record.salesRatingByCustomer != null">
+        sales_rating_by_customer = #{record.salesRatingByCustomer,jdbcType=DOUBLE},
+      </if>
+      <if test="record.salesRecordIsReturn != null">
+        sales_record_is_return = #{record.salesRecordIsReturn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serveAttitude != null">
+        serve_attitude = #{record.serveAttitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.responseSpeed != null">
+        response_speed = #{record.responseSpeed,jdbcType=DOUBLE},
+      </if>
+      <if test="record.asDescription != null">
+        as_description = #{record.asDescription,jdbcType=DOUBLE},
+      </if>
+      <if test="record.commentDate != null">
+        comment_date = #{record.commentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.commentTextInfo != null">
+        comment_text_info = #{record.commentTextInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commentPicInfo != null">
+        comment_pic_info = #{record.commentPicInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commentAddtextInfo != null">
+        comment_addtext_info = #{record.commentAddtextInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sales_records
+    set sale_record_id = #{record.saleRecordId,jdbcType=INTEGER},
+      sales_order = #{record.salesOrder,jdbcType=INTEGER},
+      sales_record_merchant = #{record.salesRecordMerchant,jdbcType=VARCHAR},
+      sales_record_product = #{record.salesRecordProduct,jdbcType=INTEGER},
+      sales_record_customer = #{record.salesRecordCustomer,jdbcType=VARCHAR},
+      sales_record_sale_count = #{record.salesRecordSaleCount,jdbcType=INTEGER},
+      sales_record_money_amount = #{record.salesRecordMoneyAmount,jdbcType=DOUBLE},
+      sales_record_service_charge = #{record.salesRecordServiceCharge,jdbcType=DOUBLE},
+      sales_record_start_date = #{record.salesRecordStartDate,jdbcType=TIMESTAMP},
+      sales_record_pay_date = #{record.salesRecordPayDate,jdbcType=TIMESTAMP},
+      sales_record_receive_date = #{record.salesRecordReceiveDate,jdbcType=TIMESTAMP},
+      sales_record_confirm_date = #{record.salesRecordConfirmDate,jdbcType=TIMESTAMP},
+      sales_rating_by_merchant = #{record.salesRatingByMerchant,jdbcType=DOUBLE},
+      sales_rating_by_customer = #{record.salesRatingByCustomer,jdbcType=DOUBLE},
+      sales_record_is_return = #{record.salesRecordIsReturn,jdbcType=VARCHAR},
+      serve_attitude = #{record.serveAttitude,jdbcType=DOUBLE},
+      response_speed = #{record.responseSpeed,jdbcType=DOUBLE},
+      as_description = #{record.asDescription,jdbcType=DOUBLE},
+      comment_date = #{record.commentDate,jdbcType=TIMESTAMP},
+      comment_text_info = #{record.commentTextInfo,jdbcType=VARCHAR},
+      comment_pic_info = #{record.commentPicInfo,jdbcType=VARCHAR},
+      comment_addtext_info = #{record.commentAddtextInfo,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.model.Sales_Record">
+    update sales_records
+    <set>
+      <if test="salesOrder != null">
+        sales_order = #{salesOrder,jdbcType=INTEGER},
+      </if>
+      <if test="salesRecordMerchant != null">
+        sales_record_merchant = #{salesRecordMerchant,jdbcType=VARCHAR},
+      </if>
+      <if test="salesRecordProduct != null">
+        sales_record_product = #{salesRecordProduct,jdbcType=INTEGER},
+      </if>
+      <if test="salesRecordCustomer != null">
+        sales_record_customer = #{salesRecordCustomer,jdbcType=VARCHAR},
+      </if>
+      <if test="salesRecordSaleCount != null">
+        sales_record_sale_count = #{salesRecordSaleCount,jdbcType=INTEGER},
+      </if>
+      <if test="salesRecordMoneyAmount != null">
+        sales_record_money_amount = #{salesRecordMoneyAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="salesRecordServiceCharge != null">
+        sales_record_service_charge = #{salesRecordServiceCharge,jdbcType=DOUBLE},
+      </if>
+      <if test="salesRecordStartDate != null">
+        sales_record_start_date = #{salesRecordStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesRecordPayDate != null">
+        sales_record_pay_date = #{salesRecordPayDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesRecordReceiveDate != null">
+        sales_record_receive_date = #{salesRecordReceiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesRecordConfirmDate != null">
+        sales_record_confirm_date = #{salesRecordConfirmDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesRatingByMerchant != null">
+        sales_rating_by_merchant = #{salesRatingByMerchant,jdbcType=DOUBLE},
+      </if>
+      <if test="salesRatingByCustomer != null">
+        sales_rating_by_customer = #{salesRatingByCustomer,jdbcType=DOUBLE},
+      </if>
+      <if test="salesRecordIsReturn != null">
+        sales_record_is_return = #{salesRecordIsReturn,jdbcType=VARCHAR},
+      </if>
+      <if test="serveAttitude != null">
+        serve_attitude = #{serveAttitude,jdbcType=DOUBLE},
+      </if>
+      <if test="responseSpeed != null">
+        response_speed = #{responseSpeed,jdbcType=DOUBLE},
+      </if>
+      <if test="asDescription != null">
+        as_description = #{asDescription,jdbcType=DOUBLE},
+      </if>
+      <if test="commentDate != null">
+        comment_date = #{commentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentTextInfo != null">
+        comment_text_info = #{commentTextInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="commentPicInfo != null">
+        comment_pic_info = #{commentPicInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="commentAddtextInfo != null">
+        comment_addtext_info = #{commentAddtextInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sale_record_id = #{saleRecordId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.model.Sales_Record">
+    update sales_records
+    set sales_order = #{salesOrder,jdbcType=INTEGER},
+      sales_record_merchant = #{salesRecordMerchant,jdbcType=VARCHAR},
+      sales_record_product = #{salesRecordProduct,jdbcType=INTEGER},
+      sales_record_customer = #{salesRecordCustomer,jdbcType=VARCHAR},
+      sales_record_sale_count = #{salesRecordSaleCount,jdbcType=INTEGER},
+      sales_record_money_amount = #{salesRecordMoneyAmount,jdbcType=DOUBLE},
+      sales_record_service_charge = #{salesRecordServiceCharge,jdbcType=DOUBLE},
+      sales_record_start_date = #{salesRecordStartDate,jdbcType=TIMESTAMP},
+      sales_record_pay_date = #{salesRecordPayDate,jdbcType=TIMESTAMP},
+      sales_record_receive_date = #{salesRecordReceiveDate,jdbcType=TIMESTAMP},
+      sales_record_confirm_date = #{salesRecordConfirmDate,jdbcType=TIMESTAMP},
+      sales_rating_by_merchant = #{salesRatingByMerchant,jdbcType=DOUBLE},
+      sales_rating_by_customer = #{salesRatingByCustomer,jdbcType=DOUBLE},
+      sales_record_is_return = #{salesRecordIsReturn,jdbcType=VARCHAR},
+      serve_attitude = #{serveAttitude,jdbcType=DOUBLE},
+      response_speed = #{responseSpeed,jdbcType=DOUBLE},
+      as_description = #{asDescription,jdbcType=DOUBLE},
+      comment_date = #{commentDate,jdbcType=TIMESTAMP},
+      comment_text_info = #{commentTextInfo,jdbcType=VARCHAR},
+      comment_pic_info = #{commentPicInfo,jdbcType=VARCHAR},
+      comment_addtext_info = #{commentAddtextInfo,jdbcType=VARCHAR}
+    where sale_record_id = #{saleRecordId,jdbcType=INTEGER}
+  </update>
+</mapper>

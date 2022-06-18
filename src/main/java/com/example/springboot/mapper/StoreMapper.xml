@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.StoreMapper">
+  <resultMap id="BaseResultMap" type="com.example.springboot.model.Store">
+    <id column="store_id" jdbcType="INTEGER" property="storeId" />
+    <result column="store_merchant" jdbcType="VARCHAR" property="storeMerchant" />
+    <result column="store_product" jdbcType="INTEGER" property="storeProduct" />
+    <result column="store_name" jdbcType="VARCHAR" property="storeName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    store_id, store_merchant, store_product, store_name
+  </sql>
+  <select id="selectByExample" parameterType="com.example.springboot.model.StoreExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from stores
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from stores
+    where store_id = #{storeId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByProductId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from stores
+    where store_product = #{storeProduct,jdbcType=INTEGER}
+  </select>
+  <select id="selectProductByMerchant" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from stores
+    where store_merchant = #{merchantAccount,jdbcType=VARCHAR} limit #{currPage,jdbcType=INTEGER} , #{pageSize,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from stores
+    where store_id = #{storeId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.model.StoreExample">
+    delete from stores
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.model.Store">
+    insert into stores (store_id, store_merchant, store_product, 
+      store_name)
+    values (#{storeId,jdbcType=INTEGER}, #{storeMerchant,jdbcType=VARCHAR}, #{storeProduct,jdbcType=INTEGER}, 
+      #{storeName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.model.Store">
+    insert into stores
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="storeId != null">
+        store_id,
+      </if>
+      <if test="storeMerchant != null">
+        store_merchant,
+      </if>
+      <if test="storeProduct != null">
+        store_product,
+      </if>
+      <if test="storeName != null">
+        store_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="storeId != null">
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="storeMerchant != null">
+        #{storeMerchant,jdbcType=VARCHAR},
+      </if>
+      <if test="storeProduct != null">
+        #{storeProduct,jdbcType=INTEGER},
+      </if>
+      <if test="storeName != null">
+        #{storeName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.model.StoreExample" resultType="java.lang.Long">
+    select count(*) from stores
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="countByMerchantAccount" parameterType="java.lang.String" resultType="java.lang.Long">
+    select count(*) from stores
+    where store_merchant = #{merchantAccount, jdbcType=VARCHAR}
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update stores
+    <set>
+      <if test="record.storeId != null">
+        store_id = #{record.storeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeMerchant != null">
+        store_merchant = #{record.storeMerchant,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeProduct != null">
+        store_product = #{record.storeProduct,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeName != null">
+        store_name = #{record.storeName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update stores
+    set store_id = #{record.storeId,jdbcType=INTEGER},
+      store_merchant = #{record.storeMerchant,jdbcType=VARCHAR},
+      store_product = #{record.storeProduct,jdbcType=INTEGER},
+      store_name = #{record.storeName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.model.Store">
+    update stores
+    <set>
+      <if test="storeMerchant != null">
+        store_merchant = #{storeMerchant,jdbcType=VARCHAR},
+      </if>
+      <if test="storeProduct != null">
+        store_product = #{storeProduct,jdbcType=INTEGER},
+      </if>
+      <if test="storeName != null">
+        store_name = #{storeName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where store_id = #{storeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.model.Store">
+    update stores
+    set store_merchant = #{storeMerchant,jdbcType=VARCHAR},
+      store_product = #{storeProduct,jdbcType=INTEGER},
+      store_name = #{storeName,jdbcType=VARCHAR}
+    where store_id = #{storeId,jdbcType=INTEGER}
+  </update>
+</mapper>

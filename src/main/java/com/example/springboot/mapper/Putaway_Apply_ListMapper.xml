@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.Putaway_Apply_ListMapper">
+  <resultMap id="BaseResultMap" type="com.example.springboot.model.Putaway_Apply_List">
+    <id column="putaway_id" jdbcType="INTEGER" property="putawayId" />
+    <result column="putaway_merchant" jdbcType="VARCHAR" property="putawayMerchant" />
+    <result column="putaway_name" jdbcType="VARCHAR" property="putawayName" />
+    <result column="putaway_count" jdbcType="INTEGER" property="putawayCount" />
+    <result column="putaway_price" jdbcType="DOUBLE" property="putawayPrice" />
+    <result column="putaway_discount_price" jdbcType="DOUBLE" property="putawayDiscountPrice" />
+    <result column="putaway_catagory" jdbcType="VARCHAR" property="putawayCatagory" />
+    <result column="putaway_size" jdbcType="VARCHAR" property="putawaySize" />
+    <result column="putaway_picture_dir" jdbcType="VARCHAR" property="putawayPictureDir" />
+    <result column="putaway_negotiable" jdbcType="VARCHAR" property="putawayNegotiable" />
+    <result column="putaway_condition_degree" jdbcType="DOUBLE" property="putawayConditionDegree" />
+    <result column="putaway_description" jdbcType="VARCHAR" property="putawayDescription" />
+    <result column="putaway_statment" jdbcType="VARCHAR" property="putawayStatment" />
+    <result column="putaway_submit_date" jdbcType="TIMESTAMP" property="putawaySubmitDate" />
+    <result column="putaway_finish_date" jdbcType="TIMESTAMP" property="putawayFinishDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    putaway_id, putaway_merchant, putaway_name, putaway_count, putaway_price, putaway_discount_price, 
+    putaway_catagory, putaway_size, putaway_picture_dir, putaway_negotiable, putaway_condition_degree, 
+    putaway_description, putaway_statment, putaway_submit_date, putaway_finish_date
+  </sql>
+  <select id="selectByExample" parameterType="com.example.springboot.model.Putaway_Apply_ListExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from putaway_apply_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from putaway_apply_list
+    where putaway_id = #{putawayId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from putaway_apply_list limit #{currPage,jdbcType=INTEGER} , #{pageSize,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from putaway_apply_list
+    where putaway_id = #{putawayId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.model.Putaway_Apply_ListExample">
+    delete from putaway_apply_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.model.Putaway_Apply_List">
+    insert into putaway_apply_list (putaway_id, putaway_merchant, putaway_name, 
+      putaway_count, putaway_price, putaway_discount_price, 
+      putaway_catagory, putaway_size, putaway_picture_dir, 
+      putaway_negotiable, putaway_condition_degree, 
+      putaway_description, putaway_statment, putaway_submit_date, 
+      putaway_finish_date)
+    values (#{putawayId,jdbcType=INTEGER}, #{putawayMerchant,jdbcType=VARCHAR}, #{putawayName,jdbcType=VARCHAR}, 
+      #{putawayCount,jdbcType=INTEGER}, #{putawayPrice,jdbcType=DOUBLE}, #{putawayDiscountPrice,jdbcType=DOUBLE}, 
+      #{putawayCatagory,jdbcType=VARCHAR}, #{putawaySize,jdbcType=VARCHAR}, #{putawayPictureDir,jdbcType=VARCHAR}, 
+      #{putawayNegotiable,jdbcType=VARCHAR}, #{putawayConditionDegree,jdbcType=DOUBLE}, 
+      #{putawayDescription,jdbcType=VARCHAR}, #{putawayStatment,jdbcType=VARCHAR}, #{putawaySubmitDate,jdbcType=TIMESTAMP}, 
+      #{putawayFinishDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.model.Putaway_Apply_List">
+    insert into putaway_apply_list
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="putawayId != null">
+        putaway_id,
+      </if>
+      <if test="putawayMerchant != null">
+        putaway_merchant,
+      </if>
+      <if test="putawayName != null">
+        putaway_name,
+      </if>
+      <if test="putawayCount != null">
+        putaway_count,
+      </if>
+      <if test="putawayPrice != null">
+        putaway_price,
+      </if>
+      <if test="putawayDiscountPrice != null">
+        putaway_discount_price,
+      </if>
+      <if test="putawayCatagory != null">
+        putaway_catagory,
+      </if>
+      <if test="putawaySize != null">
+        putaway_size,
+      </if>
+      <if test="putawayPictureDir != null">
+        putaway_picture_dir,
+      </if>
+      <if test="putawayNegotiable != null">
+        putaway_negotiable,
+      </if>
+      <if test="putawayConditionDegree != null">
+        putaway_condition_degree,
+      </if>
+      <if test="putawayDescription != null">
+        putaway_description,
+      </if>
+      <if test="putawayStatment != null">
+        putaway_statment,
+      </if>
+      <if test="putawaySubmitDate != null">
+        putaway_submit_date,
+      </if>
+      <if test="putawayFinishDate != null">
+        putaway_finish_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="putawayId != null">
+        #{putawayId,jdbcType=INTEGER},
+      </if>
+      <if test="putawayMerchant != null">
+        #{putawayMerchant,jdbcType=VARCHAR},
+      </if>
+      <if test="putawayName != null">
+        #{putawayName,jdbcType=VARCHAR},
+      </if>
+      <if test="putawayCount != null">
+        #{putawayCount,jdbcType=INTEGER},
+      </if>
+      <if test="putawayPrice != null">
+        #{putawayPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="putawayDiscountPrice != null">
+        #{putawayDiscountPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="putawayCatagory != null">
+        #{putawayCatagory,jdbcType=VARCHAR},
+      </if>
+      <if test="putawaySize != null">
+        #{putawaySize,jdbcType=VARCHAR},
+      </if>
+      <if test="putawayPictureDir != null">
+        #{putawayPictureDir,jdbcType=VARCHAR},
+      </if>
+      <if test="putawayNegotiable != null">
+        #{putawayNegotiable,jdbcType=VARCHAR},
+      </if>
+      <if test="putawayConditionDegree != null">
+        #{putawayConditionDegree,jdbcType=DOUBLE},
+      </if>
+      <if test="putawayDescription != null">
+        #{putawayDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="putawayStatment != null">
+        #{putawayStatment,jdbcType=VARCHAR},
+      </if>
+      <if test="putawaySubmitDate != null">
+        #{putawaySubmitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="putawayFinishDate != null">
+        #{putawayFinishDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.model.Putaway_Apply_ListExample" resultType="java.lang.Long">
+    select count(*) from putaway_apply_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update putaway_apply_list
+    <set>
+      <if test="record.putawayId != null">
+        putaway_id = #{record.putawayId,jdbcType=INTEGER},
+      </if>
+      <if test="record.putawayMerchant != null">
+        putaway_merchant = #{record.putawayMerchant,jdbcType=VARCHAR},
+      </if>
+      <if test="record.putawayName != null">
+        putaway_name = #{record.putawayName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.putawayCount != null">
+        putaway_count = #{record.putawayCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.putawayPrice != null">
+        putaway_price = #{record.putawayPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.putawayDiscountPrice != null">
+        putaway_discount_price = #{record.putawayDiscountPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.putawayCatagory != null">
+        putaway_catagory = #{record.putawayCatagory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.putawaySize != null">
+        putaway_size = #{record.putawaySize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.putawayPictureDir != null">
+        putaway_picture_dir = #{record.putawayPictureDir,jdbcType=VARCHAR},
+      </if>
+      <if test="record.putawayNegotiable != null">
+        putaway_negotiable = #{record.putawayNegotiable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.putawayConditionDegree != null">
+        putaway_condition_degree = #{record.putawayConditionDegree,jdbcType=DOUBLE},
+      </if>
+      <if test="record.putawayDescription != null">
+        putaway_description = #{record.putawayDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.putawayStatment != null">
+        putaway_statment = #{record.putawayStatment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.putawaySubmitDate != null">
+        putaway_submit_date = #{record.putawaySubmitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.putawayFinishDate != null">
+        putaway_finish_date = #{record.putawayFinishDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update putaway_apply_list
+    set putaway_id = #{record.putawayId,jdbcType=INTEGER},
+      putaway_merchant = #{record.putawayMerchant,jdbcType=VARCHAR},
+      putaway_name = #{record.putawayName,jdbcType=VARCHAR},
+      putaway_count = #{record.putawayCount,jdbcType=INTEGER},
+      putaway_price = #{record.putawayPrice,jdbcType=DOUBLE},
+      putaway_discount_price = #{record.putawayDiscountPrice,jdbcType=DOUBLE},
+      putaway_catagory = #{record.putawayCatagory,jdbcType=VARCHAR},
+      putaway_size = #{record.putawaySize,jdbcType=VARCHAR},
+      putaway_picture_dir = #{record.putawayPictureDir,jdbcType=VARCHAR},
+      putaway_negotiable = #{record.putawayNegotiable,jdbcType=VARCHAR},
+      putaway_condition_degree = #{record.putawayConditionDegree,jdbcType=DOUBLE},
+      putaway_description = #{record.putawayDescription,jdbcType=VARCHAR},
+      putaway_statment = #{record.putawayStatment,jdbcType=VARCHAR},
+      putaway_submit_date = #{record.putawaySubmitDate,jdbcType=TIMESTAMP},
+      putaway_finish_date = #{record.putawayFinishDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.model.Putaway_Apply_List">
+    update putaway_apply_list
+    <set>
+      <if test="putawayMerchant != null">
+        putaway_merchant = #{putawayMerchant,jdbcType=VARCHAR},
+      </if>
+      <if test="putawayName != null">
+        putaway_name = #{putawayName,jdbcType=VARCHAR},
+      </if>
+      <if test="putawayCount != null">
+        putaway_count = #{putawayCount,jdbcType=INTEGER},
+      </if>
+      <if test="putawayPrice != null">
+        putaway_price = #{putawayPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="putawayDiscountPrice != null">
+        putaway_discount_price = #{putawayDiscountPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="putawayCatagory != null">
+        putaway_catagory = #{putawayCatagory,jdbcType=VARCHAR},
+      </if>
+      <if test="putawaySize != null">
+        putaway_size = #{putawaySize,jdbcType=VARCHAR},
+      </if>
+      <if test="putawayPictureDir != null">
+        putaway_picture_dir = #{putawayPictureDir,jdbcType=VARCHAR},
+      </if>
+      <if test="putawayNegotiable != null">
+        putaway_negotiable = #{putawayNegotiable,jdbcType=VARCHAR},
+      </if>
+      <if test="putawayConditionDegree != null">
+        putaway_condition_degree = #{putawayConditionDegree,jdbcType=DOUBLE},
+      </if>
+      <if test="putawayDescription != null">
+        putaway_description = #{putawayDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="putawayStatment != null">
+        putaway_statment = #{putawayStatment,jdbcType=VARCHAR},
+      </if>
+      <if test="putawaySubmitDate != null">
+        putaway_submit_date = #{putawaySubmitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="putawayFinishDate != null">
+        putaway_finish_date = #{putawayFinishDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where putaway_id = #{putawayId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.model.Putaway_Apply_List">
+    update putaway_apply_list
+    set putaway_merchant = #{putawayMerchant,jdbcType=VARCHAR},
+      putaway_name = #{putawayName,jdbcType=VARCHAR},
+      putaway_count = #{putawayCount,jdbcType=INTEGER},
+      putaway_price = #{putawayPrice,jdbcType=DOUBLE},
+      putaway_discount_price = #{putawayDiscountPrice,jdbcType=DOUBLE},
+      putaway_catagory = #{putawayCatagory,jdbcType=VARCHAR},
+      putaway_size = #{putawaySize,jdbcType=VARCHAR},
+      putaway_picture_dir = #{putawayPictureDir,jdbcType=VARCHAR},
+      putaway_negotiable = #{putawayNegotiable,jdbcType=VARCHAR},
+      putaway_condition_degree = #{putawayConditionDegree,jdbcType=DOUBLE},
+      putaway_description = #{putawayDescription,jdbcType=VARCHAR},
+      putaway_statment = #{putawayStatment,jdbcType=VARCHAR},
+      putaway_submit_date = #{putawaySubmitDate,jdbcType=TIMESTAMP},
+      putaway_finish_date = #{putawayFinishDate,jdbcType=TIMESTAMP}
+    where putaway_id = #{putawayId,jdbcType=INTEGER}
+  </update>
+</mapper>

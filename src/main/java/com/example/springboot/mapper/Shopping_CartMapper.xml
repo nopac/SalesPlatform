@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.Shopping_CartMapper">
+  <resultMap id="BaseResultMap" type="com.example.springboot.model.Shopping_Cart">
+    <id column="shopping_cart_id" jdbcType="INTEGER" property="shoppingCartId" />
+    <result column="shopping_cart_customer" jdbcType="VARCHAR" property="shoppingCartCustomer" />
+    <result column="shopping_cart_merchant" jdbcType="VARCHAR" property="shoppingCartMerchant" />
+    <result column="shopping_cart_product_id" jdbcType="INTEGER" property="shoppingCartProductId" />
+    <result column="shopping_cart_product_name" jdbcType="VARCHAR" property="shoppingCartProductName" />
+    <result column="shopping_cart_count" jdbcType="INTEGER" property="shoppingCartCount" />
+    <result column="shopping_cart_unit_price" jdbcType="DOUBLE" property="shoppingCartUnitPrice" />
+    <result column="shopping_cart_total_price" jdbcType="DOUBLE" property="shoppingCartTotalPrice" />
+    <result column="shopping_cart_add_date" jdbcType="TIMESTAMP" property="shoppingCartAddDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    shopping_cart_id, shopping_cart_customer, shopping_cart_merchant, shopping_cart_product_id, 
+    shopping_cart_product_name, shopping_cart_count, shopping_cart_unit_price, shopping_cart_total_price, 
+    shopping_cart_add_date
+  </sql>
+  <select id="selectByExample" parameterType="com.example.springboot.model.Shopping_CartExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from shopping_carts
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shopping_carts
+    where shopping_cart_id = #{shoppingCartId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
+    select * from shopping_carts
+    where shopping_cart_customer = #{customerAccount,jdbcType=VARCHAR} limit #{currPage,jdbcType=INTEGER} , #{pageSize,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from shopping_carts
+    where shopping_cart_id = #{shoppingCartId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.model.Shopping_CartExample">
+    delete from shopping_carts
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.model.Shopping_Cart">
+    insert into shopping_carts (shopping_cart_id, shopping_cart_customer, 
+      shopping_cart_merchant, shopping_cart_product_id, 
+      shopping_cart_product_name, shopping_cart_count, 
+      shopping_cart_unit_price, shopping_cart_total_price, 
+      shopping_cart_add_date)
+    values (#{shoppingCartId,jdbcType=INTEGER}, #{shoppingCartCustomer,jdbcType=VARCHAR}, 
+      #{shoppingCartMerchant,jdbcType=VARCHAR}, #{shoppingCartProductId,jdbcType=INTEGER}, 
+      #{shoppingCartProductName,jdbcType=VARCHAR}, #{shoppingCartCount,jdbcType=INTEGER}, 
+      #{shoppingCartUnitPrice,jdbcType=DOUBLE}, #{shoppingCartTotalPrice,jdbcType=DOUBLE}, 
+      #{shoppingCartAddDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.model.Shopping_Cart">
+    insert into shopping_carts
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shoppingCartId != null">
+        shopping_cart_id,
+      </if>
+      <if test="shoppingCartCustomer != null">
+        shopping_cart_customer,
+      </if>
+      <if test="shoppingCartMerchant != null">
+        shopping_cart_merchant,
+      </if>
+      <if test="shoppingCartProductId != null">
+        shopping_cart_product_id,
+      </if>
+      <if test="shoppingCartProductName != null">
+        shopping_cart_product_name,
+      </if>
+      <if test="shoppingCartCount != null">
+        shopping_cart_count,
+      </if>
+      <if test="shoppingCartUnitPrice != null">
+        shopping_cart_unit_price,
+      </if>
+      <if test="shoppingCartTotalPrice != null">
+        shopping_cart_total_price,
+      </if>
+      <if test="shoppingCartAddDate != null">
+        shopping_cart_add_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shoppingCartId != null">
+        #{shoppingCartId,jdbcType=INTEGER},
+      </if>
+      <if test="shoppingCartCustomer != null">
+        #{shoppingCartCustomer,jdbcType=VARCHAR},
+      </if>
+      <if test="shoppingCartMerchant != null">
+        #{shoppingCartMerchant,jdbcType=VARCHAR},
+      </if>
+      <if test="shoppingCartProductId != null">
+        #{shoppingCartProductId,jdbcType=INTEGER},
+      </if>
+      <if test="shoppingCartProductName != null">
+        #{shoppingCartProductName,jdbcType=VARCHAR},
+      </if>
+      <if test="shoppingCartCount != null">
+        #{shoppingCartCount,jdbcType=INTEGER},
+      </if>
+      <if test="shoppingCartUnitPrice != null">
+        #{shoppingCartUnitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="shoppingCartTotalPrice != null">
+        #{shoppingCartTotalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="shoppingCartAddDate != null">
+        #{shoppingCartAddDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.model.Shopping_CartExample" resultType="java.lang.Long">
+    select count(*) from shopping_carts
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="countByCustomerAccount" parameterType="java.lang.String" resultType="java.lang.Long">
+    select count(*) from shopping_carts
+    where shopping_cart_customer = #{customerAccount,jdbcType=VARCHAR}
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update shopping_carts
+    <set>
+      <if test="record.shoppingCartId != null">
+        shopping_cart_id = #{record.shoppingCartId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shoppingCartCustomer != null">
+        shopping_cart_customer = #{record.shoppingCartCustomer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shoppingCartMerchant != null">
+        shopping_cart_merchant = #{record.shoppingCartMerchant,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shoppingCartProductId != null">
+        shopping_cart_product_id = #{record.shoppingCartProductId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shoppingCartProductName != null">
+        shopping_cart_product_name = #{record.shoppingCartProductName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shoppingCartCount != null">
+        shopping_cart_count = #{record.shoppingCartCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.shoppingCartUnitPrice != null">
+        shopping_cart_unit_price = #{record.shoppingCartUnitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.shoppingCartTotalPrice != null">
+        shopping_cart_total_price = #{record.shoppingCartTotalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.shoppingCartAddDate != null">
+        shopping_cart_add_date = #{record.shoppingCartAddDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update shopping_carts
+    set shopping_cart_id = #{record.shoppingCartId,jdbcType=INTEGER},
+      shopping_cart_customer = #{record.shoppingCartCustomer,jdbcType=VARCHAR},
+      shopping_cart_merchant = #{record.shoppingCartMerchant,jdbcType=VARCHAR},
+      shopping_cart_product_id = #{record.shoppingCartProductId,jdbcType=INTEGER},
+      shopping_cart_product_name = #{record.shoppingCartProductName,jdbcType=VARCHAR},
+      shopping_cart_count = #{record.shoppingCartCount,jdbcType=INTEGER},
+      shopping_cart_unit_price = #{record.shoppingCartUnitPrice,jdbcType=DOUBLE},
+      shopping_cart_total_price = #{record.shoppingCartTotalPrice,jdbcType=DOUBLE},
+      shopping_cart_add_date = #{record.shoppingCartAddDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.model.Shopping_Cart">
+    update shopping_carts
+    <set>
+      <if test="shoppingCartCustomer != null">
+        shopping_cart_customer = #{shoppingCartCustomer,jdbcType=VARCHAR},
+      </if>
+      <if test="shoppingCartMerchant != null">
+        shopping_cart_merchant = #{shoppingCartMerchant,jdbcType=VARCHAR},
+      </if>
+      <if test="shoppingCartProductId != null">
+        shopping_cart_product_id = #{shoppingCartProductId,jdbcType=INTEGER},
+      </if>
+      <if test="shoppingCartProductName != null">
+        shopping_cart_product_name = #{shoppingCartProductName,jdbcType=VARCHAR},
+      </if>
+      <if test="shoppingCartCount != null">
+        shopping_cart_count = #{shoppingCartCount,jdbcType=INTEGER},
+      </if>
+      <if test="shoppingCartUnitPrice != null">
+        shopping_cart_unit_price = #{shoppingCartUnitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="shoppingCartTotalPrice != null">
+        shopping_cart_total_price = #{shoppingCartTotalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="shoppingCartAddDate != null">
+        shopping_cart_add_date = #{shoppingCartAddDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where shopping_cart_id = #{shoppingCartId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.model.Shopping_Cart">
+    update shopping_carts
+    set shopping_cart_customer = #{shoppingCartCustomer,jdbcType=VARCHAR},
+      shopping_cart_merchant = #{shoppingCartMerchant,jdbcType=VARCHAR},
+      shopping_cart_product_id = #{shoppingCartProductId,jdbcType=INTEGER},
+      shopping_cart_product_name = #{shoppingCartProductName,jdbcType=VARCHAR},
+      shopping_cart_count = #{shoppingCartCount,jdbcType=INTEGER},
+      shopping_cart_unit_price = #{shoppingCartUnitPrice,jdbcType=DOUBLE},
+      shopping_cart_total_price = #{shoppingCartTotalPrice,jdbcType=DOUBLE},
+      shopping_cart_add_date = #{shoppingCartAddDate,jdbcType=TIMESTAMP}
+    where shopping_cart_id = #{shoppingCartId,jdbcType=INTEGER}
+  </update>
+</mapper>

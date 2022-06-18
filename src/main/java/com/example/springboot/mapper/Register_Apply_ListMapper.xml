@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.Register_Apply_ListMapper">
+  <resultMap id="BaseResultMap" type="com.example.springboot.model.Register_Apply_List">
+    <id column="registerlist_id" jdbcType="INTEGER" property="registerlistId" />
+    <result column="register_type" jdbcType="VARCHAR" property="registerType" />
+    <result column="register_account" jdbcType="VARCHAR" property="registerAccount" />
+    <result column="register_name" jdbcType="VARCHAR" property="registerName" />
+    <result column="register_sex" jdbcType="VARCHAR" property="registerSex" />
+    <result column="register_phone" jdbcType="VARCHAR" property="registerPhone" />
+    <result column="register_mail" jdbcType="VARCHAR" property="registerMail" />
+    <result column="register_password" jdbcType="VARCHAR" property="registerPassword" />
+    <result column="register_city" jdbcType="VARCHAR" property="registerCity" />
+    <result column="register_bank_account" jdbcType="VARCHAR" property="registerBankAccount" />
+    <result column="register_id_card" jdbcType="VARCHAR" property="registerIdCard" />
+    <result column="register_license" jdbcType="VARCHAR" property="registerLicense" />
+    <result column="register_license_dir" jdbcType="VARCHAR" property="registerLicenseDir" />
+    <result column="register_id_card_dir" jdbcType="VARCHAR" property="registerIdCardDir" />
+    <result column="register_statment" jdbcType="VARCHAR" property="registerStatment" />
+    <result column="register_submit_date" jdbcType="TIMESTAMP" property="registerSubmitDate" />
+    <result column="register_finish_date" jdbcType="TIMESTAMP" property="registerFinishDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    registerlist_id, register_type, register_account, register_name, register_sex, register_phone, 
+    register_mail, register_password, register_city, register_bank_account, register_id_card, 
+    register_license, register_license_dir, register_id_card_dir, register_statment, 
+    register_submit_date, register_finish_date
+  </sql>
+  <select id="selectByExample" parameterType="com.example.springboot.model.Register_Apply_ListExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from register_apply_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from register_apply_list
+    where registerlist_id = #{registerlistId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from register_apply_list limit #{currPage,jdbcType=INTEGER} , #{pageSize,jdbcType=INTEGER}
+  </select>
+  <select id="selectUnchecked" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from register_apply_list where register_statment = '待审核' limit #{currPage,jdbcType=INTEGER} , #{pageSize,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from register_apply_list
+    where registerlist_id = #{registerlistId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.model.Register_Apply_ListExample">
+    delete from register_apply_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.model.Register_Apply_List">
+    insert into register_apply_list (registerlist_id, register_type, register_account, 
+      register_name, register_sex, register_phone, 
+      register_mail, register_password, register_city, 
+      register_bank_account, register_id_card, register_license, 
+      register_license_dir, register_id_card_dir, 
+      register_statment, register_submit_date, 
+      register_finish_date)
+    values (#{registerlistId,jdbcType=INTEGER}, #{registerType,jdbcType=VARCHAR}, #{registerAccount,jdbcType=VARCHAR}, 
+      #{registerName,jdbcType=VARCHAR}, #{registerSex,jdbcType=VARCHAR}, #{registerPhone,jdbcType=VARCHAR}, 
+      #{registerMail,jdbcType=VARCHAR}, #{registerPassword,jdbcType=VARCHAR}, #{registerCity,jdbcType=VARCHAR}, 
+      #{registerBankAccount,jdbcType=VARCHAR}, #{registerIdCard,jdbcType=VARCHAR}, #{registerLicense,jdbcType=VARCHAR}, 
+      #{registerLicenseDir,jdbcType=VARCHAR}, #{registerIdCardDir,jdbcType=VARCHAR}, 
+      #{registerStatment,jdbcType=VARCHAR}, #{registerSubmitDate,jdbcType=TIMESTAMP}, 
+      #{registerFinishDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.model.Register_Apply_List">
+    insert into register_apply_list
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="registerlistId != null">
+        registerlist_id,
+      </if>
+      <if test="registerType != null">
+        register_type,
+      </if>
+      <if test="registerAccount != null">
+        register_account,
+      </if>
+      <if test="registerName != null">
+        register_name,
+      </if>
+      <if test="registerSex != null">
+        register_sex,
+      </if>
+      <if test="registerPhone != null">
+        register_phone,
+      </if>
+      <if test="registerMail != null">
+        register_mail,
+      </if>
+      <if test="registerPassword != null">
+        register_password,
+      </if>
+      <if test="registerCity != null">
+        register_city,
+      </if>
+      <if test="registerBankAccount != null">
+        register_bank_account,
+      </if>
+      <if test="registerIdCard != null">
+        register_id_card,
+      </if>
+      <if test="registerLicense != null">
+        register_license,
+      </if>
+      <if test="registerLicenseDir != null">
+        register_license_dir,
+      </if>
+      <if test="registerIdCardDir != null">
+        register_id_card_dir,
+      </if>
+      <if test="registerStatment != null">
+        register_statment,
+      </if>
+      <if test="registerSubmitDate != null">
+        register_submit_date,
+      </if>
+      <if test="registerFinishDate != null">
+        register_finish_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="registerlistId != null">
+        #{registerlistId,jdbcType=INTEGER},
+      </if>
+      <if test="registerType != null">
+        #{registerType,jdbcType=VARCHAR},
+      </if>
+      <if test="registerAccount != null">
+        #{registerAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="registerName != null">
+        #{registerName,jdbcType=VARCHAR},
+      </if>
+      <if test="registerSex != null">
+        #{registerSex,jdbcType=VARCHAR},
+      </if>
+      <if test="registerPhone != null">
+        #{registerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="registerMail != null">
+        #{registerMail,jdbcType=VARCHAR},
+      </if>
+      <if test="registerPassword != null">
+        #{registerPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="registerCity != null">
+        #{registerCity,jdbcType=VARCHAR},
+      </if>
+      <if test="registerBankAccount != null">
+        #{registerBankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="registerIdCard != null">
+        #{registerIdCard,jdbcType=VARCHAR},
+      </if>
+      <if test="registerLicense != null">
+        #{registerLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="registerLicenseDir != null">
+        #{registerLicenseDir,jdbcType=VARCHAR},
+      </if>
+      <if test="registerIdCardDir != null">
+        #{registerIdCardDir,jdbcType=VARCHAR},
+      </if>
+      <if test="registerStatment != null">
+        #{registerStatment,jdbcType=VARCHAR},
+      </if>
+      <if test="registerSubmitDate != null">
+        #{registerSubmitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registerFinishDate != null">
+        #{registerFinishDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.model.Register_Apply_ListExample" resultType="java.lang.Long">
+    select count(*) from register_apply_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="countByUnchecked" resultType="java.lang.Long">
+    select count(*) from register_apply_list
+    where register_statment = '待审核'
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update register_apply_list
+    <set>
+      <if test="record.registerlistId != null">
+        registerlist_id = #{record.registerlistId,jdbcType=INTEGER},
+      </if>
+      <if test="record.registerType != null">
+        register_type = #{record.registerType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerAccount != null">
+        register_account = #{record.registerAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerName != null">
+        register_name = #{record.registerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerSex != null">
+        register_sex = #{record.registerSex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerPhone != null">
+        register_phone = #{record.registerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerMail != null">
+        register_mail = #{record.registerMail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerPassword != null">
+        register_password = #{record.registerPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerCity != null">
+        register_city = #{record.registerCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerBankAccount != null">
+        register_bank_account = #{record.registerBankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerIdCard != null">
+        register_id_card = #{record.registerIdCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerLicense != null">
+        register_license = #{record.registerLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerLicenseDir != null">
+        register_license_dir = #{record.registerLicenseDir,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerIdCardDir != null">
+        register_id_card_dir = #{record.registerIdCardDir,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerStatment != null">
+        register_statment = #{record.registerStatment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerSubmitDate != null">
+        register_submit_date = #{record.registerSubmitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.registerFinishDate != null">
+        register_finish_date = #{record.registerFinishDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update register_apply_list
+    set registerlist_id = #{record.registerlistId,jdbcType=INTEGER},
+      register_type = #{record.registerType,jdbcType=VARCHAR},
+      register_account = #{record.registerAccount,jdbcType=VARCHAR},
+      register_name = #{record.registerName,jdbcType=VARCHAR},
+      register_sex = #{record.registerSex,jdbcType=VARCHAR},
+      register_phone = #{record.registerPhone,jdbcType=VARCHAR},
+      register_mail = #{record.registerMail,jdbcType=VARCHAR},
+      register_password = #{record.registerPassword,jdbcType=VARCHAR},
+      register_city = #{record.registerCity,jdbcType=VARCHAR},
+      register_bank_account = #{record.registerBankAccount,jdbcType=VARCHAR},
+      register_id_card = #{record.registerIdCard,jdbcType=VARCHAR},
+      register_license = #{record.registerLicense,jdbcType=VARCHAR},
+      register_license_dir = #{record.registerLicenseDir,jdbcType=VARCHAR},
+      register_id_card_dir = #{record.registerIdCardDir,jdbcType=VARCHAR},
+      register_statment = #{record.registerStatment,jdbcType=VARCHAR},
+      register_submit_date = #{record.registerSubmitDate,jdbcType=TIMESTAMP},
+      register_finish_date = #{record.registerFinishDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.model.Register_Apply_List">
+    update register_apply_list
+    <set>
+      <if test="registerType != null">
+        register_type = #{registerType,jdbcType=VARCHAR},
+      </if>
+      <if test="registerAccount != null">
+        register_account = #{registerAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="registerName != null">
+        register_name = #{registerName,jdbcType=VARCHAR},
+      </if>
+      <if test="registerSex != null">
+        register_sex = #{registerSex,jdbcType=VARCHAR},
+      </if>
+      <if test="registerPhone != null">
+        register_phone = #{registerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="registerMail != null">
+        register_mail = #{registerMail,jdbcType=VARCHAR},
+      </if>
+      <if test="registerPassword != null">
+        register_password = #{registerPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="registerCity != null">
+        register_city = #{registerCity,jdbcType=VARCHAR},
+      </if>
+      <if test="registerBankAccount != null">
+        register_bank_account = #{registerBankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="registerIdCard != null">
+        register_id_card = #{registerIdCard,jdbcType=VARCHAR},
+      </if>
+      <if test="registerLicense != null">
+        register_license = #{registerLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="registerLicenseDir != null">
+        register_license_dir = #{registerLicenseDir,jdbcType=VARCHAR},
+      </if>
+      <if test="registerIdCardDir != null">
+        register_id_card_dir = #{registerIdCardDir,jdbcType=VARCHAR},
+      </if>
+      <if test="registerStatment != null">
+        register_statment = #{registerStatment,jdbcType=VARCHAR},
+      </if>
+      <if test="registerSubmitDate != null">
+        register_submit_date = #{registerSubmitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registerFinishDate != null">
+        register_finish_date = #{registerFinishDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where registerlist_id = #{registerlistId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.model.Register_Apply_List">
+    update register_apply_list
+    set register_type = #{registerType,jdbcType=VARCHAR},
+      register_account = #{registerAccount,jdbcType=VARCHAR},
+      register_name = #{registerName,jdbcType=VARCHAR},
+      register_sex = #{registerSex,jdbcType=VARCHAR},
+      register_phone = #{registerPhone,jdbcType=VARCHAR},
+      register_mail = #{registerMail,jdbcType=VARCHAR},
+      register_password = #{registerPassword,jdbcType=VARCHAR},
+      register_city = #{registerCity,jdbcType=VARCHAR},
+      register_bank_account = #{registerBankAccount,jdbcType=VARCHAR},
+      register_id_card = #{registerIdCard,jdbcType=VARCHAR},
+      register_license = #{registerLicense,jdbcType=VARCHAR},
+      register_license_dir = #{registerLicenseDir,jdbcType=VARCHAR},
+      register_id_card_dir = #{registerIdCardDir,jdbcType=VARCHAR},
+      register_statment = #{registerStatment,jdbcType=VARCHAR},
+      register_submit_date = #{registerSubmitDate,jdbcType=TIMESTAMP},
+      register_finish_date = #{registerFinishDate,jdbcType=TIMESTAMP}
+    where registerlist_id = #{registerlistId,jdbcType=INTEGER}
+  </update>
+</mapper>

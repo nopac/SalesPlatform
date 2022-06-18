@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.MerchantMapper">
+  <resultMap id="BaseResultMap" type="com.example.springboot.model.Merchant">
+    <id column="merchantid" jdbcType="INTEGER" property="merchantid" />
+    <result column="merchant_account" jdbcType="VARCHAR" property="merchantAccount" />
+    <result column="merchant_password" jdbcType="VARCHAR" property="merchantPassword" />
+    <result column="merchant_phone" jdbcType="VARCHAR" property="merchantPhone" />
+    <result column="merchant_name" jdbcType="VARCHAR" property="merchantName" />
+    <result column="merchant_sex" jdbcType="VARCHAR" property="merchantSex" />
+    <result column="merchant_idcard" jdbcType="VARCHAR" property="merchantIdcard" />
+    <result column="merchant_idcard_dir" jdbcType="VARCHAR" property="merchantIdcardDir" />
+    <result column="merchant_license_dir" jdbcType="VARCHAR" property="merchantLicenseDir" />
+    <result column="merchant_register_date" jdbcType="TIMESTAMP" property="merchantRegisterDate" />
+    <result column="merchant_service_price_rate" jdbcType="DOUBLE" property="merchantServicePriceRate" />
+    <result column="merchant_satisfaction_degree" jdbcType="DOUBLE" property="merchantSatisfactionDegree" />
+    <result column="merchant_total_sale_amount" jdbcType="DOUBLE" property="merchantTotalSaleAmount" />
+    <result column="merchant_license" jdbcType="VARCHAR" property="merchantLicense" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    merchantid, merchant_account, merchant_password, merchant_phone, merchant_name, merchant_sex, 
+    merchant_idcard, merchant_idcard_dir, merchant_license_dir, merchant_register_date, 
+    merchant_service_price_rate, merchant_satisfaction_degree, merchant_total_sale_amount, 
+    merchant_license
+  </sql>
+  <select id="selectByExample" parameterType="com.example.springboot.model.MerchantExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from merchants
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from merchants
+    where merchantid = #{merchantid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from merchants
+    where merchant_account = #{merchantAccount,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from merchants
+    where merchant_phone = #{merchantPhone,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByIdCard" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from merchants
+    where merchant_idcard = #{merchantIdcard,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByLicense" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from merchants
+    where merchant_license = #{merchantLicense,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
+    select * from merchants limit #{currPage} , #{pageSize}
+  </select>
+  <select id="selectAllMerchant" resultMap="BaseResultMap">
+    select * from merchants
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from merchants
+    where merchantid = #{merchantid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.model.MerchantExample">
+    delete from merchants
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.model.Merchant">
+    insert into merchants (merchantid, merchant_account, merchant_password, 
+      merchant_phone, merchant_name, merchant_sex, 
+      merchant_idcard, merchant_idcard_dir, merchant_license_dir, 
+      merchant_register_date, merchant_service_price_rate, 
+      merchant_satisfaction_degree, merchant_total_sale_amount, 
+      merchant_license)
+    values (#{merchantid,jdbcType=INTEGER}, #{merchantAccount,jdbcType=VARCHAR}, #{merchantPassword,jdbcType=VARCHAR}, 
+      #{merchantPhone,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, #{merchantSex,jdbcType=VARCHAR}, 
+      #{merchantIdcard,jdbcType=VARCHAR}, #{merchantIdcardDir,jdbcType=VARCHAR}, #{merchantLicenseDir,jdbcType=VARCHAR}, 
+      #{merchantRegisterDate,jdbcType=TIMESTAMP}, #{merchantServicePriceRate,jdbcType=DOUBLE}, 
+      #{merchantSatisfactionDegree,jdbcType=DOUBLE}, #{merchantTotalSaleAmount,jdbcType=DOUBLE}, 
+      #{merchantLicense,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.model.Merchant">
+    insert into merchants
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="merchantid != null">
+        merchantid,
+      </if>
+      <if test="merchantAccount != null">
+        merchant_account,
+      </if>
+      <if test="merchantPassword != null">
+        merchant_password,
+      </if>
+      <if test="merchantPhone != null">
+        merchant_phone,
+      </if>
+      <if test="merchantName != null">
+        merchant_name,
+      </if>
+      <if test="merchantSex != null">
+        merchant_sex,
+      </if>
+      <if test="merchantIdcard != null">
+        merchant_idcard,
+      </if>
+      <if test="merchantIdcardDir != null">
+        merchant_idcard_dir,
+      </if>
+      <if test="merchantLicenseDir != null">
+        merchant_license_dir,
+      </if>
+      <if test="merchantRegisterDate != null">
+        merchant_register_date,
+      </if>
+      <if test="merchantServicePriceRate != null">
+        merchant_service_price_rate,
+      </if>
+      <if test="merchantSatisfactionDegree != null">
+        merchant_satisfaction_degree,
+      </if>
+      <if test="merchantTotalSaleAmount != null">
+        merchant_total_sale_amount,
+      </if>
+      <if test="merchantLicense != null">
+        merchant_license,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="merchantid != null">
+        #{merchantid,jdbcType=INTEGER},
+      </if>
+      <if test="merchantAccount != null">
+        #{merchantAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantPassword != null">
+        #{merchantPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantPhone != null">
+        #{merchantPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantSex != null">
+        #{merchantSex,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantIdcard != null">
+        #{merchantIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantIdcardDir != null">
+        #{merchantIdcardDir,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantLicenseDir != null">
+        #{merchantLicenseDir,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantRegisterDate != null">
+        #{merchantRegisterDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="merchantServicePriceRate != null">
+        #{merchantServicePriceRate,jdbcType=DOUBLE},
+      </if>
+      <if test="merchantSatisfactionDegree != null">
+        #{merchantSatisfactionDegree,jdbcType=DOUBLE},
+      </if>
+      <if test="merchantTotalSaleAmount != null">
+        #{merchantTotalSaleAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="merchantLicense != null">
+        #{merchantLicense,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.model.MerchantExample" resultType="java.lang.Long">
+    select count(*) from merchants
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update merchants
+    <set>
+      <if test="record.merchantid != null">
+        merchantid = #{record.merchantid,jdbcType=INTEGER},
+      </if>
+      <if test="record.merchantAccount != null">
+        merchant_account = #{record.merchantAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantPassword != null">
+        merchant_password = #{record.merchantPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantPhone != null">
+        merchant_phone = #{record.merchantPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantName != null">
+        merchant_name = #{record.merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantSex != null">
+        merchant_sex = #{record.merchantSex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantIdcard != null">
+        merchant_idcard = #{record.merchantIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantIdcardDir != null">
+        merchant_idcard_dir = #{record.merchantIdcardDir,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantLicenseDir != null">
+        merchant_license_dir = #{record.merchantLicenseDir,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantRegisterDate != null">
+        merchant_register_date = #{record.merchantRegisterDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.merchantServicePriceRate != null">
+        merchant_service_price_rate = #{record.merchantServicePriceRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.merchantSatisfactionDegree != null">
+        merchant_satisfaction_degree = #{record.merchantSatisfactionDegree,jdbcType=DOUBLE},
+      </if>
+      <if test="record.merchantTotalSaleAmount != null">
+        merchant_total_sale_amount = #{record.merchantTotalSaleAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.merchantLicense != null">
+        merchant_license = #{record.merchantLicense,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update merchants
+    set merchantid = #{record.merchantid,jdbcType=INTEGER},
+      merchant_account = #{record.merchantAccount,jdbcType=VARCHAR},
+      merchant_password = #{record.merchantPassword,jdbcType=VARCHAR},
+      merchant_phone = #{record.merchantPhone,jdbcType=VARCHAR},
+      merchant_name = #{record.merchantName,jdbcType=VARCHAR},
+      merchant_sex = #{record.merchantSex,jdbcType=VARCHAR},
+      merchant_idcard = #{record.merchantIdcard,jdbcType=VARCHAR},
+      merchant_idcard_dir = #{record.merchantIdcardDir,jdbcType=VARCHAR},
+      merchant_license_dir = #{record.merchantLicenseDir,jdbcType=VARCHAR},
+      merchant_register_date = #{record.merchantRegisterDate,jdbcType=TIMESTAMP},
+      merchant_service_price_rate = #{record.merchantServicePriceRate,jdbcType=DOUBLE},
+      merchant_satisfaction_degree = #{record.merchantSatisfactionDegree,jdbcType=DOUBLE},
+      merchant_total_sale_amount = #{record.merchantTotalSaleAmount,jdbcType=DOUBLE},
+      merchant_license = #{record.merchantLicense,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.model.Merchant">
+    update merchants
+    <set>
+      <if test="merchantAccount != null">
+        merchant_account = #{merchantAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantPassword != null">
+        merchant_password = #{merchantPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantPhone != null">
+        merchant_phone = #{merchantPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        merchant_name = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantSex != null">
+        merchant_sex = #{merchantSex,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantIdcard != null">
+        merchant_idcard = #{merchantIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantIdcardDir != null">
+        merchant_idcard_dir = #{merchantIdcardDir,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantLicenseDir != null">
+        merchant_license_dir = #{merchantLicenseDir,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantRegisterDate != null">
+        merchant_register_date = #{merchantRegisterDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="merchantServicePriceRate != null">
+        merchant_service_price_rate = #{merchantServicePriceRate,jdbcType=DOUBLE},
+      </if>
+      <if test="merchantSatisfactionDegree != null">
+        merchant_satisfaction_degree = #{merchantSatisfactionDegree,jdbcType=DOUBLE},
+      </if>
+      <if test="merchantTotalSaleAmount != null">
+        merchant_total_sale_amount = #{merchantTotalSaleAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="merchantLicense != null">
+        merchant_license = #{merchantLicense,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where merchantid = #{merchantid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.model.Merchant">
+    update merchants
+    set merchant_account = #{merchantAccount,jdbcType=VARCHAR},
+      merchant_password = #{merchantPassword,jdbcType=VARCHAR},
+      merchant_phone = #{merchantPhone,jdbcType=VARCHAR},
+      merchant_name = #{merchantName,jdbcType=VARCHAR},
+      merchant_sex = #{merchantSex,jdbcType=VARCHAR},
+      merchant_idcard = #{merchantIdcard,jdbcType=VARCHAR},
+      merchant_idcard_dir = #{merchantIdcardDir,jdbcType=VARCHAR},
+      merchant_license_dir = #{merchantLicenseDir,jdbcType=VARCHAR},
+      merchant_register_date = #{merchantRegisterDate,jdbcType=TIMESTAMP},
+      merchant_service_price_rate = #{merchantServicePriceRate,jdbcType=DOUBLE},
+      merchant_satisfaction_degree = #{merchantSatisfactionDegree,jdbcType=DOUBLE},
+      merchant_total_sale_amount = #{merchantTotalSaleAmount,jdbcType=DOUBLE},
+      merchant_license = #{merchantLicense,jdbcType=VARCHAR}
+    where merchantid = #{merchantid,jdbcType=INTEGER}
+  </update>
+</mapper>

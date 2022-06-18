@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.example.springboot.model.Product">
+    <id column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_count" jdbcType="INTEGER" property="productCount" />
+    <result column="product_price" jdbcType="DOUBLE" property="productPrice" />
+    <result column="product_discount_price" jdbcType="DOUBLE" property="productDiscountPrice" />
+    <result column="product_category" jdbcType="VARCHAR" property="productCategory" />
+    <result column="product_size" jdbcType="VARCHAR" property="productSize" />
+    <result column="product_picture_dir" jdbcType="VARCHAR" property="productPictureDir" />
+    <result column="product_negotiable" jdbcType="VARCHAR" property="productNegotiable" />
+    <result column="product_condition_degree" jdbcType="DOUBLE" property="productConditionDegree" />
+    <result column="product_on_sale" jdbcType="VARCHAR" property="productOnSale" />
+    <result column="product_description" jdbcType="VARCHAR" property="productDescription" />
+    <result column="product_add_date" jdbcType="TIMESTAMP" property="productAddDate" />
+    <result column="product_delete_date" jdbcType="TIMESTAMP" property="productDeleteDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    product_id, product_name, product_count, product_price, product_discount_price, product_category, 
+    product_size, product_picture_dir, product_negotiable, product_condition_degree, 
+    product_on_sale, product_description, product_add_date, product_delete_date
+  </sql>
+  <select id="selectByExample" parameterType="com.example.springboot.model.ProductExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from products
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
+    select * from products limit #{currPage,jdbcType=INTEGER} , #{pageSize,jdbcType=INTEGER}
+  </select>
+  <select id="selectLastByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select * from products where product_id=(select max(product_id) from products);
+  </select>
+  <select id="selectType" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from products
+    where product_category = #{type,jdbcType=VARCHAR} limit #{currPage,jdbcType=INTEGER} , #{pageSize,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from products
+    where product_id = #{productId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from products
+    where product_name like concat('%',#{productName,jdbcType=VARCHAR},'%')
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from products
+    where product_id = #{productId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.model.ProductExample">
+    delete from products
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.model.Product">
+    insert into products (product_id, product_name, product_count, 
+      product_price, product_discount_price, product_category, 
+      product_size, product_picture_dir, product_negotiable, 
+      product_condition_degree, product_on_sale, product_description, 
+      product_add_date, product_delete_date)
+    values (#{productId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{productCount,jdbcType=INTEGER}, 
+      #{productPrice,jdbcType=DOUBLE}, #{productDiscountPrice,jdbcType=DOUBLE}, #{productCategory,jdbcType=VARCHAR}, 
+      #{productSize,jdbcType=VARCHAR}, #{productPictureDir,jdbcType=VARCHAR}, #{productNegotiable,jdbcType=VARCHAR}, 
+      #{productConditionDegree,jdbcType=DOUBLE}, #{productOnSale,jdbcType=VARCHAR}, #{productDescription,jdbcType=VARCHAR}, 
+      #{productAddDate,jdbcType=TIMESTAMP}, #{productDeleteDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.model.Product">
+    insert into products
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="productCount != null">
+        product_count,
+      </if>
+      <if test="productPrice != null">
+        product_price,
+      </if>
+      <if test="productDiscountPrice != null">
+        product_discount_price,
+      </if>
+      <if test="productCategory != null">
+        product_category,
+      </if>
+      <if test="productSize != null">
+        product_size,
+      </if>
+      <if test="productPictureDir != null">
+        product_picture_dir,
+      </if>
+      <if test="productNegotiable != null">
+        product_negotiable,
+      </if>
+      <if test="productConditionDegree != null">
+        product_condition_degree,
+      </if>
+      <if test="productOnSale != null">
+        product_on_sale,
+      </if>
+      <if test="productDescription != null">
+        product_description,
+      </if>
+      <if test="productAddDate != null">
+        product_add_date,
+      </if>
+      <if test="productDeleteDate != null">
+        product_delete_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productCount != null">
+        #{productCount,jdbcType=INTEGER},
+      </if>
+      <if test="productPrice != null">
+        #{productPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="productDiscountPrice != null">
+        #{productDiscountPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="productCategory != null">
+        #{productCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="productSize != null">
+        #{productSize,jdbcType=VARCHAR},
+      </if>
+      <if test="productPictureDir != null">
+        #{productPictureDir,jdbcType=VARCHAR},
+      </if>
+      <if test="productNegotiable != null">
+        #{productNegotiable,jdbcType=VARCHAR},
+      </if>
+      <if test="productConditionDegree != null">
+        #{productConditionDegree,jdbcType=DOUBLE},
+      </if>
+      <if test="productOnSale != null">
+        #{productOnSale,jdbcType=VARCHAR},
+      </if>
+      <if test="productDescription != null">
+        #{productDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="productAddDate != null">
+        #{productAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productDeleteDate != null">
+        #{productDeleteDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.model.ProductExample" resultType="java.lang.Long">
+    select count(*) from products
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="countByType" parameterType="java.lang.String" resultType="java.lang.Long">
+    select count(*) from products
+    where product_category = #{type,jdbcType=VARCHAR}
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update products
+    <set>
+      <if test="record.productId != null">
+        product_id = #{record.productId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productName != null">
+        product_name = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productCount != null">
+        product_count = #{record.productCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.productPrice != null">
+        product_price = #{record.productPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.productDiscountPrice != null">
+        product_discount_price = #{record.productDiscountPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.productCategory != null">
+        product_category = #{record.productCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productSize != null">
+        product_size = #{record.productSize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productPictureDir != null">
+        product_picture_dir = #{record.productPictureDir,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productNegotiable != null">
+        product_negotiable = #{record.productNegotiable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productConditionDegree != null">
+        product_condition_degree = #{record.productConditionDegree,jdbcType=DOUBLE},
+      </if>
+      <if test="record.productOnSale != null">
+        product_on_sale = #{record.productOnSale,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productDescription != null">
+        product_description = #{record.productDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productAddDate != null">
+        product_add_date = #{record.productAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.productDeleteDate != null">
+        product_delete_date = #{record.productDeleteDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update products
+    set product_id = #{record.productId,jdbcType=INTEGER},
+      product_name = #{record.productName,jdbcType=VARCHAR},
+      product_count = #{record.productCount,jdbcType=INTEGER},
+      product_price = #{record.productPrice,jdbcType=DOUBLE},
+      product_discount_price = #{record.productDiscountPrice,jdbcType=DOUBLE},
+      product_category = #{record.productCategory,jdbcType=VARCHAR},
+      product_size = #{record.productSize,jdbcType=VARCHAR},
+      product_picture_dir = #{record.productPictureDir,jdbcType=VARCHAR},
+      product_negotiable = #{record.productNegotiable,jdbcType=VARCHAR},
+      product_condition_degree = #{record.productConditionDegree,jdbcType=DOUBLE},
+      product_on_sale = #{record.productOnSale,jdbcType=VARCHAR},
+      product_description = #{record.productDescription,jdbcType=VARCHAR},
+      product_add_date = #{record.productAddDate,jdbcType=TIMESTAMP},
+      product_delete_date = #{record.productDeleteDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.model.Product">
+    update products
+    <set>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productCount != null">
+        product_count = #{productCount,jdbcType=INTEGER},
+      </if>
+      <if test="productPrice != null">
+        product_price = #{productPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="productDiscountPrice != null">
+        product_discount_price = #{productDiscountPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="productCategory != null">
+        product_category = #{productCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="productSize != null">
+        product_size = #{productSize,jdbcType=VARCHAR},
+      </if>
+      <if test="productPictureDir != null">
+        product_picture_dir = #{productPictureDir,jdbcType=VARCHAR},
+      </if>
+      <if test="productNegotiable != null">
+        product_negotiable = #{productNegotiable,jdbcType=VARCHAR},
+      </if>
+      <if test="productConditionDegree != null">
+        product_condition_degree = #{productConditionDegree,jdbcType=DOUBLE},
+      </if>
+      <if test="productOnSale != null">
+        product_on_sale = #{productOnSale,jdbcType=VARCHAR},
+      </if>
+      <if test="productDescription != null">
+        product_description = #{productDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="productAddDate != null">
+        product_add_date = #{productAddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productDeleteDate != null">
+        product_delete_date = #{productDeleteDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.model.Product">
+    update products
+    set product_name = #{productName,jdbcType=VARCHAR},
+      product_count = #{productCount,jdbcType=INTEGER},
+      product_price = #{productPrice,jdbcType=DOUBLE},
+      product_discount_price = #{productDiscountPrice,jdbcType=DOUBLE},
+      product_category = #{productCategory,jdbcType=VARCHAR},
+      product_size = #{productSize,jdbcType=VARCHAR},
+      product_picture_dir = #{productPictureDir,jdbcType=VARCHAR},
+      product_negotiable = #{productNegotiable,jdbcType=VARCHAR},
+      product_condition_degree = #{productConditionDegree,jdbcType=DOUBLE},
+      product_on_sale = #{productOnSale,jdbcType=VARCHAR},
+      product_description = #{productDescription,jdbcType=VARCHAR},
+      product_add_date = #{productAddDate,jdbcType=TIMESTAMP},
+      product_delete_date = #{productDeleteDate,jdbcType=TIMESTAMP}
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+</mapper>

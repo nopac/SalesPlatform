@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="MybatisGenerator" targetRuntime="mybatis3">
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!-- 数据库连接信息：驱动类 ，连接地址，用户名，密码-->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://39.105.220.225:3306/spring"
+                        userId="root" password="115225">
+        </jdbcConnection>
+
+        <!-- 默认值 -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成的实体类的存放位置 -->
+        <javaModelGenerator targetPackage="com.example.springboot.model" targetProject="src/main/java">
+            <!-- enableSubPackages：是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 生成的Mapper映射文件（XML）的存放位置 -->
+        <sqlMapGenerator targetPackage="com.example.springboot.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!-- 生成的mapper接口(JAVA文件)的存放位置 -->
+        <javaClientGenerator targetPackage="com.example.springboot.mapper" type="XMLMAPPER" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <!-- 指定数据库表 ,类名，属性-->
+<!--        <table tableName="customers" domainObjectName="Customer"/>-->
+<!--        <table tableName="comments" domainObjectName="Comment"/>-->
+<!--        <table tableName="managers" domainObjectName="Manager"/>-->
+<!--        <table tableName="merchants" domainObjectName="Merchant"/>-->
+<!--        <table tableName="products" domainObjectName="Product"/>-->
+        <table tableName="customer_blacklist" domainObjectName="Customer_BlackList"/>
+<!--        <table tableName="merchant_limitlist" domainObjectName="Merchant_LimitList"/>-->
+<!--        <table tableName="putaway_apply_list" domainObjectName="Putaway_Apply_List"/>-->
+<!--        <table tableName="register_apply_list" domainObjectName="Register_Apply_List"/>-->
+<!--        <table tableName="sales_records" domainObjectName="Sales_Record"/>-->
+<!--        <table tableName="shopping_carts" domainObjectName="Shopping_Cart"/>-->
+<!--        <table tableName="stores" domainObjectName="Store"/>-->
+<!--        <table tableName="recharge_records" domainObjectName="Recharge_Records"/>-->
+<!--        <table tableName="comment_from_merchant" domainObjectName="Comment_From_Merchant"/>-->
+<!--        <table tableName="orders" domainObjectName="Order"/>-->
+<!--        <table tableName="return_list" domainObjectName="Return_List"/>-->
+
+    </context>
+</generatorConfiguration>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <script th:inline="javascript">
+        function customer_register() {
+            window.location.href = "/customer_register";
+        }
+    </script>
+</head>
+<body>
+<form method="post" action="login">
+    账号：<input type="text" id="account" name="account"><br>
+    密码：<input type="text" id="password" name="password"><br>
+    用户类别：
+    <input type="radio" name="userType" value="customer">普通用户
+    <input type="radio" name="userType" value="merchant">商家
+    <input type="radio" name="userType" value="manager">管理员<br>
+    <button type="submit">登录</button>
+    <button type="button" onclick="customer_register()">注册</button><br>
+</form>
+
+</body>
+</html>

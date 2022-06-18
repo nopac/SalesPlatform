@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>词法分析器</title>
+    <script>
+        function send() {
+            var inputArea = document.getElementById("input").value;
+            var outputArea = document.getElementById("output");
+            outputArea.innerHTML = "";
+            var xhr = new XMLHttpRequest();
+            xhr.open("post","analyse_submit");
+            xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            xhr.send("input="+inputArea.replaceAll("%" ,"%25"));
+
+            xhr.onreadystatechange = function(){
+                // 判断服务器是否响应，判断异步对象的响应状态
+                if(xhr.status == 200 && xhr.readyState == 4){
+                    outputArea.innerHTML = xhr.responseText;
+                }
+            }
+        }
+
+        function removeall() {
+            document.getElementById("output").innerText = "";
+        }
+
+    </script>
+</head>
+<body id="body">
+<form method="post" action="/analyse" id="form">
+    <h1>词法分析器</h1>
+    <textarea id="input" name="input">
+const int array[2] = {1,2};
+
+int main()
+{
+    int c;
+    c = getint();
+    char s = '4';
+    char _sasc = 'a';
+    int as#csa = 9;
+    int 67sc9 = 1;
+    if(s >= '4')
+    {
+        c = 6;
+    }
+    c != 5;
+    printf("output >= is %d",c);
+    return c;
+}
+    </textarea>
+    <textarea id="output" name="output"></textarea><br>
+    <button id="submit" type="button" onclick="send()">提交</button>
+    <button id="clear" type="button" onclick="removeall()">清空</button>
+
+</form>
+
+</body>
+
+<style>
+    #body{
+        background: url("https://img2.baidu.com/it/u=3785908241,2527299695&fm=253&fmt=auto&app=138&f=JPEG?w=780&h=351") no-repeat;
+        background-size: 100% 100%;
+    }
+    #form{
+        text-align: center;
+    }
+    #input{
+        width: 400px;
+        height: 750px;
+        background-color: darkgray;
+        opacity: 0.9;
+        font-size: x-large;
+        border-radius: 10px;
+    }
+    #output{
+        width: 400px;
+        height: 750px;
+        background-color: darkgray;
+        opacity: 0.9;
+        font-size: x-large;
+        border-radius: 10px;
+    }
+    #submit{
+        height: 50px;
+        width: 100px;
+        font-size: x-large;
+    }
+    #clear{
+        font-size: x-large;
+        height: 50px;
+        width: 100px;
+    }
+</style>
+</html>
